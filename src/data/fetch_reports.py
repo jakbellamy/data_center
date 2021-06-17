@@ -3,37 +3,9 @@ import logging
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
 from os import getenv
-import datetime
 from requests import get
 from requests_ntlm import HttpNtlmAuth as ForgeAuth
-import pandas as pd
-
-reports = {
-    'pipeline': {
-        'parent': 'Sales',
-        'child': 'Pipeline Report (1065)'
-    },
-    'csat_surveys': {
-        'parent': 'Sales',
-        'child': 'Customer Satisfaction Surveys (3099)'
-    },
-    'app_to_close': {
-        'parent': 'Sales',
-        'child': 'Approval To Closing Report (1953)'
-    },
-    'branch_pipeline': {
-        'parent': 'Sales',
-        'child': 'Branch Pipeline Report (3054)'
-    },
-    'branch_production_details': {
-        'parent': 'Sales',
-        'child': 'Branch Production Details (3073)'
-    },
-    'cot_surveys': {
-        'parent': 'Sales',
-        'child': 'Close on Time Fund on Time Survey Results (1179)'
-    },
-}
+from src.io.constants import reports
 
 
 def derive_report_url(report: dict):
@@ -49,7 +21,6 @@ def derive_report_url(report: dict):
 @click.command()
 @click.option('--report_name', type=str)
 def main(report_name):
-    logger = logging.getLogger(__name__)
     username = getenv("REPORTING_USER")
     password = getenv("REPORTING_PASS")
 
