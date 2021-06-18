@@ -42,7 +42,8 @@ def fetch_data(dataset, output):
                 'asa_contracts',
                 'lite_accounts',
                 'lite_contracts',
-                'lite_production'
+                'lite_production',
+                'referral_source_changes'
             ]
         }
     }

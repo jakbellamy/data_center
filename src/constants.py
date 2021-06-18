@@ -1,4 +1,4 @@
-reports = {
+myreports_options = {
     'pipeline': {
         'parent': 'Sales',
         'child': 'Pipeline Report (1065)'
@@ -40,3 +40,12 @@ reports = {
         'child': 'Year over Year Production Activity Report (1848)'
     }
 }
+
+funding_by_referral_columns = [
+    'Loan Number', 'LOS System', 'Branch', 'Property State',
+    'Funded Month', 'Borrower', 'Units', 'Total Loan Amount',
+    'Loan Type', 'Loan Program', 'Lien Position', 'Loan Purpose',
+    'Loan Officer', 'Lead Source', 'Referral Source',
+    'Referral Name', 'Prior Year', 'Year To Date', 'Prior Month',
+    'Month To Date'
+]

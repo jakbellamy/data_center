@@ -5,7 +5,7 @@ from dotenv import find_dotenv, load_dotenv
 from os import getenv
 from requests import get
 from requests_ntlm import HttpNtlmAuth as ForgeAuth
-from src.io.constants import reports
+from src.constants import myreports_options
 
 
 def derive_report_url(report: dict):
@@ -23,12 +23,12 @@ def derive_report_url(report: dict):
 def main(report_name):
     username = getenv("REPORTING_USER")
     password = getenv("REPORTING_PASS")
-    if report_name in reports.keys():
-        res = get(derive_report_url(reports[report_name]),
+    if report_name in myreports_options.keys():
+        res = get(derive_report_url(myreports_options[report_name]),
                   auth=ForgeAuth(username, password))
         if res.status_code == 200:
             report = res.__dict__['_content']
-            with open(f'data/raw/{reports[report_name]["child"]}.xlsx', "wb") as file:
+            with open(f'data/raw/{myreports_options[report_name]["child"]}.xlsx', "wb") as file:
                 file.write(report)
                 file.close()
         else:
