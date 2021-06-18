@@ -23,7 +23,6 @@ def derive_report_url(report: dict):
 def main(report_name):
     username = getenv("REPORTING_USER")
     password = getenv("REPORTING_PASS")
-
     if report_name in reports.keys():
         res = get(derive_report_url(reports[report_name]),
                   auth=ForgeAuth(username, password))

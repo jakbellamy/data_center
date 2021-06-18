@@ -25,11 +25,11 @@ requirements: test_environment
 
 ## Fetch Margins Data
 seed: test_environment
-	$(PYTHON_INTERPRETER) src/data/fetch_data.py --dataset=$(dataset) --output=data/raw
+	$(PYTHON_INTERPRETER) src/data/fetching/fetch_data.py --dataset=$(dataset) --output=data/raw
 
 ## Fetch SQL Report
 my_reports_fetch: test_environment
-	$(PYTHON_INTERPRETER) src/data/fetch_reports.py --report_name=$(report)
+	$(PYTHON_INTERPRETER) src/data/fetching/fetch_reports.py --report_name=$(report)
 
 ## Set up python interpreter environment
 create_environment:
