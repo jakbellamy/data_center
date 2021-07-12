@@ -30,8 +30,8 @@ class Message(object):
 
         self.msg = client.make(
             new=k.outgoing_message,
-            with_properties={k.subject: subject, k.content: body, k.sender: {k.name: 'Jakob Bellamy',
-                                                                             k.address: 'Jakob.Bellamy@supremelending.com',
+            with_properties={k.subject: subject, k.content: body, k.sender: {k.name: 'Supreme Lending Advertising Services',
+                                                                             k.address: 'asapartnerships@supremelending.com',
                                                                              k.type: k.unresolved_address}},
         )
 
