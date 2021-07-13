@@ -24,7 +24,8 @@ def main():
             to_recipients=row['email'],
             cc_recipients=['Phil.Blankstein@supremelending.com']
         )
-        msg.show()
+        # msg.show()
+        print(html)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
