@@ -8,11 +8,15 @@ referrals_path = './data/raw/Funding By Referral Source (2006).xlsx'
 csat = pd.read_excel(csat_path, sheet_name='LO Details', skiprows=5)
 csat.columns = ['Loan Number'] + list(csat.columns[1:])
 csat.dropna(subset=['LOS System'], inplace=True)
+csat['Loan Number'] = csat['Loan Number'].apply(pd.to_numeric)
 csat.set_index('Loan Number', inplace=True)
 
 referrals = pd.read_excel(referrals_path, sheet_name='Details', skiprows=4)
 referrals.columns = [col.split('\n')[0] for col in referrals.columns]
+referrals['Loan Number'] = referrals['Loan Number'].apply(pd.to_numeric)
 referrals.set_index('Loan Number', inplace=True)
+
+df = csat.join(referrals[['Funded Month', 'Loan Officer']])
 
 
 def create_word_cloud(col_name: str):

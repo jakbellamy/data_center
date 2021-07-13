@@ -7,6 +7,13 @@ def split_raw_email_list(list_string=read_clipboard()):
     return [email.split('>')[0] for email in list_string.split('<')[1:]]
 
 
+def parse_out_email(outlook_email_string):
+    if '<' in outlook_email_string and '>' in outlook_email_string:
+        return ''.join(outlook_email_string.split('<')[1:]).split('>')[0]
+    else:
+        return outlook_email_string
+
+
 class Outlook(object):
     def __init__(self):
         self.client = app("Microsoft Outlook")
@@ -30,9 +37,10 @@ class Message(object):
 
         self.msg = client.make(
             new=k.outgoing_message,
-            with_properties={k.subject: subject, k.content: body, k.sender: {k.name: 'Supreme Lending Advertising Services',
-                                                                             k.address: 'asapartnerships@supremelending.com',
-                                                                             k.type: k.unresolved_address}},
+            with_properties={k.subject: subject, k.content: body,
+                             k.sender: {k.name: 'Supreme Lending Advertising Services',
+                                        k.address: 'asapartnerships@supremelending.com',
+                                        k.type: k.unresolved_address}},
         )
 
         self.add_recipients(emails=to_recipients, type_="to")
