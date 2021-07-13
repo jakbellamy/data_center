@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def main():
-    fetch
+    print('Begin this script once MyReports is back up.')
 
 
 if __name__ == '__main__':
