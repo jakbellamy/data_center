@@ -18,9 +18,7 @@ def derive_report_url(report: dict):
     return url
 
 
-@click.command()
-@click.option('--report_name', type=str)
-def main(report_name):
+def fetch_report(report_name):
     username = getenv("REPORTING_USER")
     password = getenv("REPORTING_PASS")
     if report_name in myreports_options.keys():
@@ -28,13 +26,20 @@ def main(report_name):
                   auth=ForgeAuth(username, password))
         if res.status_code == 200:
             report = res.__dict__['_content']
-            with open(f'data/raw/{myreports_options[report_name]["child"]}.xlsx', "wb") as file:
-                file.write(report)
-                file.close()
+            return report
         else:
             raise Exception('Could Not Connect.')
     else:
         raise Exception('Invalid Report Option.')
+
+
+@click.command()
+@click.option('--report_name', type=str)
+def main(report_name):
+    report = fetch_report(report_name)
+    with open(f'data/raw/{myreports_options[report_name]["child"]}.xlsx', "wb") as file:
+        file.write(report)
+        file.close()
 
 
 if __name__ == '__main__':
