@@ -3,9 +3,7 @@ import pandas as pd
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 
-pd.set_option('display.max_columns', None)
-
-csat_path = './data/raw/Customer Satisfaction Surveys - Jan - June 21.xlsx'
+csat_path = './data/raw/Customer Satisfaction Surveys (3099).xlsx'
 referrals_path = './data/raw/Funding By Referral Source (2006).xlsx'
 
 csat = pd.read_excel(csat_path, sheet_name='LO Details', skiprows=5)
@@ -37,25 +35,18 @@ def run_mr_process():
 
 
 my_reports = run_mr_process()
-my_reports = my_reports[['LOS System', 'Top Box CSAT Feedback', 'Top Box Recommend Feedback', 'Top Box Repeat Feedback', 'Top Box LOCSAT Feedback',
-                     'Top Box LPCSAT Feedback', 'Top Box Closing Feedback', 'Strength Feedback', 'Recommendation Feedback',
+my_reports = my_reports[['LOS System', 'Top Box CSAT Feedback', 'Strength Feedback', 'Recommendation Feedback',
                          'Notes Feedback', 'Borrower Last Name', 'Borrower First Name', 'Borrower Email',
                          'Funded Month', 'Loan Officer', 'Referral Source', 'Referral Name']]
-
 
 def run_old_process():
     bucket = []
     for file in [f for f in os.listdir('/Users/jakobbellamy/Desktop/CSAT Files') if 'xlsx' not in f and 'xls' in f]:
         try:
             csat_path = f'/Users/jakobbellamy/Desktop/CSAT Files/{file}'
-            try:
-                df = pd.read_excel(csat_path,
-                                   sheet_name='Details',
-                                   skiprows=2)
-            except:
-                df = pd.read_excel(csat_path,
-                                   sheet_name='Sheet3',
-                                   skiprows=2)
+            df = pd.read_excel(csat_path,
+                               sheet_name='Details',
+                               skiprows=2)
             df.columns = [x.split('\n')[0] for x in df.columns]
             df.rename(columns={'Branch': 'Loan Number'}, inplace=True)
             df = df[df['Loan Number'].apply(lambda x: len(str(x)) == 12)]
@@ -63,8 +54,7 @@ def run_old_process():
             df.set_index('Loan Number', inplace=True)
             df = df.join(referrals[['Funded Month', 'Loan Officer', 'Referral Source', 'Referral Name']])
             df['LOS System'] = 'Unplugged'
-            df = df[['LOS System', 'Top Box CSAT', 'Top Box Recommend', 'Top Box Repeat', 'Top Box LO CSat',
-                     'Top Box LP CSat', 'Top Box Closing', 'Strength', 'Recommendation', 'Notes', 'Borrower Last Name',
+            df = df[['LOS System', 'Top Box CSAT', 'Strength', 'Recommendation', 'Notes', 'Borrower Last Name',
                      'Borrower First Name', 'Borrower Email Address', 'Funded Month', 'Loan Officer', 'Referral Source',
                      'Referral Name']]
             # df.columns = my_reports.columns
@@ -78,10 +68,6 @@ old_reports = run_old_process()
 old_reports.columns = my_reports.columns
 
 full_reports = pd.concat([my_reports, old_reports])
-full_reports.columns = ['LOS System', 'Q1 Score', 'Q2 Score', 'Q3 Score', 'Q4 Score', 'Q5 Score',
-                        'Q6 Score', 'Strength Feedback', 'Recommendation Feedback', 'Notes Feedback',
-                        'Borrower Last Name', 'Borrower First Name', 'Borrower Email', 'Funded Month',
-                        'Loan Officer', 'Referral Source', 'Referral Name']
 
 def create_word_cloud(dataframe: 'pd.DataFrame', col_name: str):
     text = dataframe[col_name].dropna().values
