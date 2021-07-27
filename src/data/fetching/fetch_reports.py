@@ -22,8 +22,12 @@ def fetch_report(report_name):
     username = getenv("REPORTING_USER")
     password = getenv("REPORTING_PASS")
     if report_name in myreports_options.keys():
-        res = get(derive_report_url(myreports_options[report_name]),
-                  auth=ForgeAuth(username, password))
+        if myreports_options[report_name]['parent'] == 'raw':
+            res = get(myreports_options[report_name]['child'],
+                      auth=ForgeAuth(username, password))
+        else:
+            res = get(derive_report_url(myreports_options[report_name]),
+                      auth=ForgeAuth(username, password))
         if res.status_code == 200:
             report = res.__dict__['_content']
             return report

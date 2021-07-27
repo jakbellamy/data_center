@@ -23,12 +23,12 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 
-## Fetch Margins Data
-seed: test_environment
-	$(PYTHON_INTERPRETER) src/data/fetching/fetch_data.py --dataset=$(dataset) --output=data/raw
+# ## Fetch Margins Data
+# seed: test_environment
+# 	$(PYTHON_INTERPRETER) src/data/fetching/fetch_data.py --dataset=$(dataset) --output=data/raw
 
 ## Fetch SQL Report
-my_reports_fetch: test_environment
+seed: test_environment
 	$(PYTHON_INTERPRETER) src/data/fetching/fetch_reports.py --report_name=$(report)
 
 ## Set up python interpreter environment

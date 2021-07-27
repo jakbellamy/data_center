@@ -38,6 +38,10 @@ myreports_options = {
     'yoy_production': {
         'parent': 'sales',
         'child': 'Year over Year Production Activity Report (1848)'
+    },
+    'turn_time': {
+        'parent': 'raw',
+        'child': 'https://myreports.supremelending.com/ReportServer/Reserved.ReportViewerWebControl.axd?ExecutionID=h2tabj55wmboeoj2gh0po455&Culture=1033&CultureOverrides=False&UICulture=9&UICultureOverrides=False&ReportStack=1&ControlID=25c80cf70fba479c86a056d1ecabaa6a&OpType=Export&FileName=Turn+Time+Report+By+Title+(1092)&ContentDisposition=OnlyHtmlInline&Format=EXCELOPENXML'
     }
 }
 
