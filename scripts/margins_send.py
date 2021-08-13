@@ -7,7 +7,7 @@ from src.io.Email.Email import Message, parse_out_email
 
 def main():
     report_path = '/Users/jakobbellamy/Desktop/Margins Email/Margins Report.xlsx'
-    send_list = pd.read_excel(report_path, sheet_name='Final Send List')
+    send_list = pd.read_excel(report_path, sheet_name='Aug Send')
     send_list['email'] = send_list['email'].apply(parse_out_email)
 
     html_path = '/Users/jakobbellamy/Desktop/Margins Email/index.html'
@@ -15,17 +15,18 @@ def main():
 
     for _,row in send_list.iterrows():
         html = html_string.replace('{VAR: mtd_adjusted_margin}', str(row['mtd_adjusted_margin']))
+        html = html.replace('{VAR: lo_name}', str(row['Loan Officer']))
         html = html.replace('{VAR: ytd_adjusted_margin}', str(row['ytd_adjusted_margin']))
         html = html.replace('{VAR: lo_rank}', str(row['lo_rank']))
 
         msg = Message(
-            subject='January - June 2021 Margins Report',
+            subject='January - July 2021 Margins Report',
             body=html,
             to_recipients=row['email'],
             cc_recipients=['Phil.Blankstein@supremelending.com']
         )
-        # msg.show()
-        print(html)
+        msg.show()
+        # print(html)
 
 if __name__ == '__main__':
     log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
